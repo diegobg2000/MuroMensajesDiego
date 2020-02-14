@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<meta name="description" content="Una web preciosa y maravillosa">
+  	<meta name="author" content="Marcos Fernandez">
+
+  	<title>Mensajes</title>
+  
+  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  
+
+
+</head>
+
+<body id="page-top">
+
+
+  <!-- LISTA DE MENSAJES -->
+  <header class="masthead">
+    <div class="container">
+      <div class="intro-text col-8">
+        
+        <div class="mb-4 "> <!--  mis datos -->
+			<div th:switch="${#lists.isEmpty(mensajes)}">
+			  <div id="noHayNadie" th:case="true">
+			  		<p>No hay nadie</p>
+			  </div>
+			  <div id="hayMensajes" th:case="false">
+				    <table class="table table-dark table-hover table-sm ">
+				      <tr>
+				        <th>Id</th>
+				        <th>Texto</th>
+				      </tr>
+				      <tr th:each="mensaje: ${mensajes}">
+				        <td th:text="${mensaje.id}"></td>
+				        <td th:text="${mensaje.texto}"></td>
+ 						<td><a type="button" class="btn btn-primary btn-sm" th:href="@{/mensajes/borrar/{id}(id=${mensaje.id})}">Eliminar</a></td>				         
+				      </tr>
+				    </table>
+			  </div>
+			</div> 
+        </div><!--  fin de mis datos -->
+        
+      </div>
+
+        <div class=" d-flex justify-content-around">
+				<button type="button" class="btn btn-primary " data-toggle="modal" data-target="#crearMensaje" >
+				Nuevo mensaje
+			</button>
+			
+			<a type="button" href="/" class="btn btn-warning ">
+				Volver al menu de inicio
+			</a>
+			
+        </div>
+    </div>
+  </header>
+
+
+
+
+  		<!-- Codigo de la ventana modal-->
+		  <div class="modal fade" id="crearMensaje" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h4 class="modal-title" id="exampleModalLabel">Nuevo mensaje</h4>
+		          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+		            <span aria-hidden="true">×</span>
+		          </button>
+		        </div>
+
+                <form action="#" th:action="@{/mensajes/anadir}" th:object="${mensaje}" method="post">
+			        <div class="modal-body">
+			        
+						  <div class="form-row">
+						    <div class="form-group col-md-12">
+						      <label for="texto">Texto</label>
+						      <input type="text" th:field="*{texto}"  placeholder="inserta un texto" class="form-control" id="texto">
+						    </div>
+		                  </div>
+			        </div>
+			        <div class="modal-footer">
+		                <input type="submit" value="Añadir" class="btn btn-primary float-right">
+		                <button data-dismiss="modal" class="btn btn-outline-danger float-right mr-2">Cancelar</button>
+			        </div>
+                </form>
+		     	 </div>
+		    </div>
+		  </div>
+
+		<!-- Añadir carpeta modal -->
+
+
+
+</body>
+
+</html>
