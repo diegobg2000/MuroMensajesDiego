@@ -11,7 +11,6 @@ public class GeneradorCript {
 	BCryptPasswordEncoder encript = new BCryptPasswordEncoder();
 	return encript;
 	}
-	
-	
+		
 
 }

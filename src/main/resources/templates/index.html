@@ -13,11 +13,26 @@
   <body>
   <div class="container">
   <div class="row">
-<div sec:authorize="isAuthenticated()">
-    Bienvenido, <span sec:authentication="name">Username</span>     
+  
+  
+  <!-- Si el usuarios esta autenticado se muestra su nombre de usuario -->
+<div sec:authorize="isAuthenticated()" class="col-12">
+   <p>Bienvenido, <span sec:authentication="name">Username</span></p>     
     
 </div>
-    </div>
+
+<!-- Si el carrito es distinto de null se muestra el valor del 
+atributo "productos" de la clase Carrito.java  -->
+<div th:if="${session.carrito}" class="col-12">
+    	<p>Tienes <span th:remove="tag" th:text="${session.carrito.productos}"></span> producto(s) en el carrito</p>
+	</div>
+	
+   </div>
+
+
+
+
+	
 
 <div class="row">
 <a class="text-primary" href="/mensajes">Enlace a la table MENSAJES</a>
@@ -25,6 +40,8 @@
     <div class="row">   
 <a class="text-primary" href="/usuarios">Enlace a la table USUARIOS</a>
      </div>
+     
+<a type="button" class="btn btn-success float-left mt-3" th:href="@{/inicioCarrito}">Inicio Carrito</a>
      
     
 </div>    

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  	<meta name="description" content="Una web preciosa y maravillosa">
+  	<meta name="author" content="Marcos Fernandez">
+
+  	<title>Mensajes</title>
+  
+  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  
+
+
+</head>
+
+<body id="page-top">
+
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="row p-5">
+      <div class="col-8">
+ 
+          <form action="#" th:action="@{/usuarios/editarUser/*{usuario}}" th:object="${user}" method="post">
+	        <div class="modal-body">
+	        
+			  <div class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Usuario</label>
+			      <input type="text" th:field="*{usuario}"  placeholder="inserta un texto" class="form-control" id="texto">
+			    </div>
+                 </div>
+	        
+			  <div class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Password</label>
+			    </div>
+                 </div>
+	        
+			  <div class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Nombre</label>
+			      <input type="text" th:field="*{nombre}"  placeholder="inserta un texto" class="form-control" id="texto">
+			    </div>
+                 </div>
+	        
+			  <div class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Apellidos</label>
+			      <input type="text" th:field="*{apellidos}"  placeholder="inserta un texto" class="form-control" id="texto">
+			    </div>
+                 </div>
+                 
+			  <div th:if=" (${#authorization.expression('hasAnyAuthority(''ADMIN'',''MODERADOR'')')})" class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Permisos</label>
+					<ul>
+					  <li th:each="permiso: ${roles}">
+					    <input 
+					    	type="radio" 
+					    	name="permisos" 
+					        th:text="${permiso.nombre}"
+					        th:field="*{rol.nombre}"
+					        th:value="${permiso.nombre}"
+					    />
+					  </li>
+					</ul>
+				  </div>
+                 </div>	                  
+
+
+			<div th:if=" (${#authorization.expression('hasAnyAuthority(''USER'')')})" class="form-row">
+			    <div class="form-group col-md-12">
+			      <label for="texto">Permisos</label>
+					<ul>
+					  <li th:each="permiso: ${roles}">
+					    <input 
+					    	type="radio" 
+					    	disabled 
+					    	name="permisos" 
+					        th:text="${permiso.nombre}"
+					        th:field="*{rol.nombre}"
+					        th:value="${permiso.nombre}"
+					    />
+					  </li>
+					</ul>
+				  </div>
+                 </div>	    
+
+	        </div>
+	        <div class="modal-footer">
+                <input type="submit" value="Guardar" class="btn btn-primary float-right">
+				<a type="button" class="btn btn-danger" th:href="@{/usuarios}">Cancelar</a>
+        	 </div>
+           </form>
+      
+         
+      </div>
+      <div class="col-3 float-right">
+
+      </div> 
+    </div>
+  </header>
+
+
+
+
+</body>
+
+</html>

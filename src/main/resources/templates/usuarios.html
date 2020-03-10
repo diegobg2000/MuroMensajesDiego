@@ -60,7 +60,7 @@
 							
 							
 							<td >
-				        	<span th:remove="tag" th:if=" (${#authorization.expression('hasAnyAuthority(''MODERADOR'')')}) or (${#authentication.name} == ${user.usuario})">   
+				        	<span th:remove="tag" th:if=" (${#authorization.expression('hasAnyAuthority(''ADMIN'')')}) or (${#authentication.name} == ${user.usuario})">   
 				         		<a type="button" class="btn btn-danger btn-sm" th:href="@{/usuarios/borrar/{usuario}(usuario=${user.usuario})}">Eliminar</a>
 						</span> 
 						 </td>  
@@ -83,7 +83,8 @@
 
 			
 	
-        </div><!--  fin de mis datos -->
+        </div>
+        <!--  fin de mis datos -->
         
       </div>
       <div class=" d-flex justify-content-around">
@@ -95,10 +96,17 @@
 			<a type="button" href="/" class="btn btn-warning ">
 				Volver al menu de inicio
 			</a>
+			
+			<a type="button" class="btn btn-secondary " th:href="@{/addCarrito}">Añadir al carrito</a>
+			
         </div>
       </div> 
     </div>
   </header>
+  
+  
+  
+  
   
   
   		<!-- Añadir carpeta modal -->
@@ -118,6 +126,8 @@
 						    <div class="form-group col-md-12">
 						      <label for="nombre">Nombre de Usuario</label>
 						      <input type="text" th:field="*{usuario}"  placeholder="Usuario" class="form-control" id="usuario">
+						      <p th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}">Incorrect date</p>
+						      
 						    </div>
 		                  </div>
 		                  

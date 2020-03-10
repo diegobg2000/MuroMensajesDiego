@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.PreDestroy;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,6 +33,8 @@ import com.diego.muroMensajes.datos.rol.Rol;
 public class Usuario implements UserDetails {
 	@Id
 	@Column(name = "usuario")
+	@Size(min=2, message="TIENE QUE TENER UN MINIMO DE DOS CARACTERES")
+	@Size(max= 6, message="TIENE QUE TENER MENOS DE 7 CARACTERES")
 	private String usuario;
 	
 	@Column(name="nombre")
@@ -44,6 +52,8 @@ public class Usuario implements UserDetails {
 	@Column(name="telefono")
 	private String telefono;
 
+	@Column(name="edad")
+	private Integer edad;
 	
 	
 	/*RELACIONES ENTRE TABLAS*/
@@ -110,15 +120,23 @@ public class Usuario implements UserDetails {
 	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
+	public Integer getEdad() {
+		return edad;
+	}
 
+	public void setEdad(Integer edad) {
+		this.edad = edad;
+	}
 
 
 	
 
-	
+
+
 	
 	/*Metodos implementados de UserDetails*/
 	/*Metodos a los que tenemos acceso tras implementar UserDetails.*/
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -155,6 +173,8 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
+
+
 	/*
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="permisos", 
@@ -164,6 +184,29 @@ public class Usuario implements UserDetails {
 	*/
 
 
+	/*To String*/
+	@Override
+	public String toString() {
+		return "Usuario [usuario=" + usuario + ", edad=" + edad + "]";
+	}
+	
+	
+	
+	
+	/*Me va a imprimir el estado del objeto antes de updatearlo*/
+	@PreUpdate
+	public void antesDeUpdare() {
+		System.out.println(this);
+	}
+	
+	/*Me va a imprimir el estado del objeto despues de updatearlo*/
+	@PostUpdate
+	public void despuesDeUpdate() {
+		System.out.println(this);
+	}
+	
+
+	
 }
 
 
